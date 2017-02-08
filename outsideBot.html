@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Outside Dreams</title>
+
+
+      <link href="bot.css" rel="stylesheet" />
+        <meta charset="utf-8" />
+</head>
+
+<body>
+    <h1>Outside Dreams</h1>
+    <p id="computer">Howdydoo, how are you today?</p>
+    <input id="human" type="text" placeholder="Type Here">
+    <button>Enter</button>
+
+    <main>
+    <script type="text/javascript">
+        var computer = document.querySelector('#computer');
+        var human = document.getElementById('human');
+        var button = document.getElementsByTagName('button')[0];
+        var responseNumber;
+        var newResponse;
+        var humanMsg = "";
+        var computerMsg = "";
+
+        //new//
+        var questionTrack = "start";
+
+        var genericResponses = [
+            "Get out there.",
+            "Go GO GO",
+            "just go outside now."
+        ];
+
+        human.focus();
+
+        button.addEventListener("click", clickHandler, false);
+
+        function clickHandler() {
+            playGame();
+        }
+
+        window.addEventListener("keydown", keydownHandler, false);
+
+        function keydownHandler(event) {
+            if (event.keyCode === 13) {
+                playGame();
+            }
+        }
+
+        function playGame() {
+            //let the games begin
+            humanMsg = (human.value).toLowerCase();
+            // //version5
+            //switch questionTrack (gameState type thing)
+            switch (questionTrack) {
+            case "start":
+                firstAnalysis();
+                break;
+            case "sunny":
+                sunnyAnalysis();
+                break;
+            case "rain":
+                rainAnalysis();
+                break;
+            case "outside":
+                outsideAnalysis();
+                break;
+            case "little":
+                littleAnalysis();
+                break;
+            case "raincoat":
+                raincoatAnalysis();
+                break;
+            default:
+                genericResponse();
+                break;
+            }
+            computer.innerHTML = computerMsg;
+            ////////////////////////
+            human.value = "";
+        }
+
+        function genericResponse() {
+            // //version3
+            if (genericResponses.length > 0) {
+                newResponse = Math.floor(Math.random() * genericResponses.length);
+                responseNumber = newResponse;
+                computerMsg = genericResponses[responseNumber];
+                genericResponses.splice(responseNumber, 1);
+            } else {
+                computerMsg = "I am done talking to you. You may leave now.";
+                human.className = "displayNone";
+                button.className = "displayNone";
+                setTimeout(endGame, 2000);
+            }
+        }
+
+        function firstAnalysis() {
+            if (humanMsg.indexOf("good" || "great" || "happy") !== -1) {
+                computerMsg = "Good I bet it is because it is sunny, is it Sunny?";
+                questionTrack = "sunny";
+            } else if (humanMsg.indexOf("bad" || "not" || "sad") !== -1) {
+                computerMsg = "I bet it is because it is raining, is it raining?";
+                questionTrack = "rain";
+            } else if (humanMsg.indexOf("ok" || "okay" || "meh") !== -1) {
+                computerMsg = "Oh, I bet going outside would make it better. Why not go outside?";
+                questionTrack = "outside";
+            } else {
+                genericResponse();
+            }
+        }
+
+        function rainAnalysis() {
+            if (humanMsg.indexOf("yes" || "yeah" || "little" || "pouring" || "drizling") !== -1) {
+                computerMsg = "Ooof, well, got a rain coat?";
+                questionTrack = "raincoat";
+            } else if (humanMsg.indexOf("no" || "nope") !== -1) {
+                computerMsg = "Well why not go outside?";
+                questionTrack = "outside";
+            } else {
+                genericResponse();
+            }
+        }
+
+        function sunnyAnalysis() {
+            if (humanMsg.indexOf("yes" || "yeah") !== -1) {
+                computerMsg = "Great, why not get outside for a bit?";
+                questionTrack = "outside";
+            } else if (humanMsg.indexOf("no" || "nope") !== -1) {
+                computerMsg = "Is i Raining?";
+                questionTrack = "rain";
+            } else {
+                genericResponse();
+            }
+        }
+
+        function outsideAnalysis() {
+            if (humanMsg.indexOf("will" || "okay" || "good") !== -1) {
+                computerMsg = "Go a Long way, Get off now!";
+                genericResponse();
+
+            } else if (humanMsg.indexOf("cold" || "chilly" || "windy") !== -1) {
+                computerMsg = "Bundle up. Just go a little way";
+                questionTrack = "little";
+            } else if (humanMsg.indexOf("hot" || "humid") !== -1) {
+                computerMsg = "Grab a bottle of water and just go a little a=way!";
+                questionTrack = "little";
+            } else if (humanMsg.indexOf("night") !== -1) {
+                computerMsg = "Grab a flash light and just go a little way";
+                questionTrack = "little";
+            } else if (humanMsg.indexOf("tired" || "sleepy" || "lazy") !== -1) {
+                computerMsg = "Ohhh booo, just get up and go a littl way!";
+                questionTrack = "little";
+            } else if (humanMsg.indexOf("homework" || "work") !== -1) {
+                computerMsg = "Oh, take a break and just take a little walk t get the blood flowing";
+                questionTrack = "little";
+            }
+         else {
+            genericResponse();
+        }
+        }
+
+        function littleAnalysis() {
+            if (humanMsg.indexOf("no" || "nope") !== -1) {
+                computerMsg = "Lammmme";
+                genericResponse();
+            } else {
+                genericResponse();
+            }
+        }
+
+        function raincoatAnalysis() {
+            if (humanMsg.indexOf("yes" || "yeah") !== -1) {
+                computerMsg = "Why not go outside, seriously?";
+                questionTrack = "outside";
+            } else if (humanMsg.indexOf("no" || "nope") !== -1) {
+                computerMsg = "Bummer, gonna have to figure this one out on your own";
+                genericResponse();
+            } else {
+                genericResponse();
+            }
+        }
+
+        function endGame() {
+            ////.assign() leaves the back button working
+            ////.replace() disables the back button by replacing the location in the history
+            location.assign("http://www.creativecitydevelopments.com");
+        }
+    </script>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Pumpkinvine_Trail_Outside_of_Goshen.jpg" alt="outside"/>
+    </main>
+</body>
+
+</html>
